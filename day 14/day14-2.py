@@ -19,7 +19,7 @@ def maskpatt(mask, num):
       result = result + mask[i:i+1]
     else:
       result = result + num[i:i+1]
-
+  #print(result)
   patt = createpatt(fn, idxs, result)
   return patt
 
@@ -34,9 +34,8 @@ def createpatt(n, idxs, tmpl):
   ptts = []
   for i in range(0,itert+1):
     patt = bincleaner(i, n)
-    ptts.append(int('0b' + minpatt(patt, idxs, tmpl),2))
+    ptts.append(minpatt(patt, idxs, tmpl))
 
-  
   return ptts  
 
 def minpatt(patt, idxs, tmpl):
@@ -46,6 +45,9 @@ def minpatt(patt, idxs, tmpl):
     output = output + tmpl[pointer:idxs[i]] + patt[i]
     pointer = idxs[i] + 1
   
+  if (idxs[len(idxs) - 1] < len(tmpl)):
+    output = output + tmpl[pointer:len(tmpl)]
+
   return output
 
 f = open("day14.txt", "r")
@@ -82,7 +84,7 @@ for i in range(0,len(masks)):
     result = maskpatt(masks[i], cont[i][2][j])
     for r in result:
       if (r not in addr):
-        print(r)
+        #print(r)
         addr.append(r)
         vals.append(cont[i][1][j])
       else:
